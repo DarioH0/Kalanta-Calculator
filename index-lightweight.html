@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalanta Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      height: 100vh;
+    }
+
+    #container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #total-container {
+      background-color: #e74c3c;
+      color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      text-align: right;
+    }
+
+    #bills-container, #coins-container, #settings-container, #history-container {
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    button {
+      border: none;
+      padding: 5px 10px;
+      margin: 5px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    input[type="number"] {
+      width: 50px;
+      text-align: center;
+    }
+    
+    #coins-container img{
+      width: 45px; 
+      height: 45px; 
+    }
+
+    #bills-container img{
+      width: 75px; 
+      height: 45px; 
+    }
+
+    /* mobile responsiveness */
+    @media only screen and (max-width: 600px) {
+      #bills-container button,
+      #coins-container button,
+      #settings-container button {
+        margin: 5px auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <div id="total-container">
+    <div>Total: <span id="total">0.00</span> EUR</div>
+  </div>
+
+  <br>
+
+  <div>EUR Bills:</div>
+  <div id="bills-container">
+    <!-- 5 EUR -->
+    <button onclick="addToTotal(5, 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/EUR_5_obverse_%282013_issue%29.png/200px-EUR_5_obverse_%282013_issue%29.png', 75, 45)">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/EUR_5_obverse_%282013_issue%29.png/200px-EUR_5_obverse_%282013_issue%29.png" alt="5 EUR">
+    </button>
+    <!-- 10 EUR -->
+    <button onclick="addToTotal(10, 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/EUR_10_obverse_%282014_issue%29.png/200px-EUR_10_obverse_%282014_issue%29.png', 75, 45)">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/EUR_10_obverse_%282014_issue%29.png/200px-EUR_10_obverse_%282014_issue%29.png" alt="10 EUR">
+    </button>
+    <!-- 20 EUR -->
+    <button onclick="addToTotal(20, 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/The_Europa_series_20_%E2%82%AC_obverse_side.jpg/200px-The_Europa_series_20_%E2%82%AC_obverse_side.jpg', 75, 45)">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/The_Europa_series_20_%E2%82%AC_obverse_side.jpg/200px-The_Europa_series_20_%E2%82%AC_obverse_side.jpg" alt="20 EUR">
+    </button>
+    <!-- 50 EUR -->
+    <button onclick="addToTotal(50, 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/The_Europa_series_50_%E2%82%AC_obverse_side.png/200px-The_Europa_series_50_%E2%82%AC_obverse_side.png', 75, 45)">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/The_Europa_series_50_%E2%82%AC_obverse_side.png/200px-The_Europa_series_50_%E2%82%AC_obverse_side.png" alt="50 EUR">
+    </button>
+  </div>
+
+  <div>EUR Coins:</div>
+  <div id="coins-container">
+    <!-- 0.01 EUR -->
+    <button onclick="addToTotal(0.01, 'https://upload.wikimedia.org/wikipedia/en/2/22/1_cent_euro_coin_common_side.png', 45, 45)">
+      <img src="https://upload.wikimedia.org/wikipedia/en/2/22/1_cent_euro_coin_common_side.png" alt="0.01 EUR">
+    </button>
+    <!-- 0.02 EUR -->
+    <button onclick="addToTotal(0.02, 'https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/2_eurocent_common_1999.png/180px-2_eurocent_common_1999.png', 45, 45)">
+      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/2_eurocent_common_1999.png/180px-2_eurocent_common_1999.png" alt="0.02 EUR">
+    </button>
+    <!-- 0.05 EUR -->
+    <button onclick="addToTotal(0.05, 'https://upload.wikimedia.org/wikipedia/en/thumb/1/1e/5_eurocent_common_1999.png/180px-5_eurocent_common_1999.png', 45, 45)">
+      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/1e/5_eurocent_common_1999.png/180px-5_eurocent_common_1999.png" alt="0.05 EUR">
+    </button>
+    <!-- 0.10 EUR -->
+    <button onclick="addToTotal(0.1, 'https://upload.wikimedia.org/wikipedia/en/thumb/9/9d/10_eurocent_common_2007.png/180px-10_eurocent_common_2007.png', 45, 45)">
+      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9d/10_eurocent_common_2007.png/180px-10_eurocent_common_2007.png" alt="0.10 EUR">
+    </button>
+    <!-- 0.20 EUR -->
+    <button onclick="addToTotal(0.2, 'https://upload.wikimedia.org/wikipedia/en/thumb/9/9c/20_eurocent_common_2007.png/180px-20_eurocent_common_2007.png', 45, 45)">
+      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9c/20_eurocent_common_2007.png/180px-20_eurocent_common_2007.png" alt="0.20 EUR">
+    </button>
+    <!-- 0.50 EUR -->
+    <button onclick="addToTotal(0.5, 'https://upload.wikimedia.org/wikipedia/en/thumb/3/39/50_eurocent_common_2007.png/180px-50_eurocent_common_2007.png', 45, 45)">
+      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/39/50_eurocent_common_2007.png/180px-50_eurocent_common_2007.png" alt="0.50 EUR">
+    </button>
+    <!-- 1 EUR -->
+    <button onclick="addToTotal(1, 'https://upload.wikimedia.org/wikipedia/en/thumb/1/10/Common_face_of_one_euro_coin.png/180px-Common_face_of_one_euro_coin.png', 45, 45)">
+      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/10/Common_face_of_one_euro_coin.png/180px-Common_face_of_one_euro_coin.png" alt="1 EUR">
+    </button>
+    <!-- 2 EUR -->
+    <button onclick="addToTotal(2, 'https://upload.wikimedia.org/wikipedia/en/thumb/6/65/Common_face_of_two_euro_coin.png/180px-Common_face_of_two_euro_coin.png', 45, 45)">
+      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/65/Common_face_of_two_euro_coin.png/180px-Common_face_of_two_euro_coin.png" alt="2 EUR">
+    </button>
+  </div>
+
+  <div>Tools:</div>
+  <div id="settings-container">
+    <label>Split: <input type="number" id="splitInput" min="1" value="1" onchange="updateSplit()"></label>
+    <div>Each: <span id="eachResult">0.00</span> EUR</div>
+  </div>
+
+  <div>History:</div>
+  <div id="history-container">
+    <p>Anything you add will appear here.<br>You can remove each by clicking on them.</p>
+  </div>
+</div>
+
+<script>
+  let total = 0;
+  let history = [];
+
+  function addToTotal(amount, imageSrc, width, height) {
+    total += amount;
+    updateTotal();
+    addToHistory(amount, imageSrc, width, height);
+  }
+
+    function addToHistory(amount, imageSrc, width, height) {
+      history.push({ amount, imageSrc, width, height });
+      updateHistory();
+    }
+
+  function removeFromHistory(index) {
+    const removedAmount = history[index].amount;
+    total -= removedAmount;
+    history.splice(index, 1);
+    updateTotal();
+    updateHistory();
+  }
+
+  function updateTotal() {
+    document.getElementById('total').innerText = total.toFixed(2);
+    updateSplit();
+  }
+
+  function updateSplit() {
+    const splitInput = document.getElementById('splitInput');
+    const eachResult = document.getElementById('eachResult');
+    const splitValue = parseInt(splitInput.value, 10);
+
+    if (splitValue > 0) {
+      const result = (total / splitValue).toFixed(2);
+      eachResult.innerText = result;
+    }
+  }
+
+    function updateHistory() {
+      const historyContainer = document.getElementById('history-container');
+      historyContainer.innerHTML = '';
+
+      if (history.length === 0) {
+        historyContainer.innerText = 'You removed all of the items.';
+        return;
+      }
+
+      history.forEach((item, index) => {
+        // Create a button element
+        const button = document.createElement('button');
+        button.onclick = () => removeFromHistory(index);
+
+        // Create an image element
+        const img = document.createElement('img');
+        img.src = item.imageSrc;
+        img.alt = `History ${item.amount} EUR`;
+        img.style.width = `${item.width}px`; 
+        img.style.height = `${item.height}px`; 
+
+        button.appendChild(img);
+        historyContainer.appendChild(button);
+      });
+    }
+</script>
+
+</body>
+</html>
